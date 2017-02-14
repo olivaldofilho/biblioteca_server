@@ -1,0 +1,18 @@
+{
+  "name": "biblioteca_server",
+  "version": "1.0.0",
+  "description": "Servidor do sistema de bilioteca online",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Olivaldo - ERnetwork Soluções em T.I.",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.16.0",
+    "express": "^4.14.1",
+    "express-load": "^1.1.15",
+    "method-override": "^2.3.7",
+    "mysql": "^2.13.0"
+  }
+}
