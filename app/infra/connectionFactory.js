@@ -5,6 +5,7 @@ var connectionMysql = function(){
             host: 'bibliotecassia.c8faq4h583ys.us-east-1.rds.amazonaws.com',
             user: 'usr_biblioteca',
             password: 'G3G9I2V2',
+			port     : '3306',
             database: 'bibliotecassia'
     });    
 };
