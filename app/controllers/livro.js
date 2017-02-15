@@ -8,10 +8,11 @@ module.exports = function(app){
         livrosDAO.getLivros(function(err, results){
             if (err){
                 res.status(400).json(err);
-            }
-            console.log('Entrou na lista');
-            console.log(results);
-            res.json(results);   
+            }else{
+				console.log('Entrou na lista');
+				console.log(results);
+				res.json(results);   
+			}            
         });        
         conn.end();
     };
