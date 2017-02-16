@@ -6,13 +6,14 @@ module.exports = function(app){
         var livrosDAO = new app.infra.LivrosDAO(conn, 0); 
         
         livrosDAO.getLivros(function(err, results){
+            console.log('Entrou na lista');
             if (err){
+                 console.log(err);
                 res.status(400).json(err);
-            }else{
-				console.log('Entrou na lista');
-				console.log(results);
-				res.json(results);   
-			}            
+            }else{                
+                console.log(results);
+                res.json(results); 
+            }              
         });        
         conn.end();
     };

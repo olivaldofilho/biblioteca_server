@@ -22,16 +22,20 @@ LivrosDAO.prototype.salva = function(livro, callback){
     var valor = '';
     console.log(livro.id);
     if (!livro.id){
-        campo = 'isbn, titulo, descricao';
+        campo = 'isbn, titulo, descricao, idautor, localizacao';
         valor = "'" + livro.isbn + "', ";
         valor += "'" + livro.titulo + "', ";
-        valor += "'" + livro.descricao + "'";
+        valor += "'" + livro.descricao + "',";
+        valor += "'" + livro.idautor + "',";
+        valor += "'" + livro.localizacao + "'";
         var sql = 'insert into livros (' + campo + ') values (' + valor + ')'; 
         this._conn.query(sql, callback);    
     }else{
         valor = "isbn = '" + livro.isbn + "', ";
         valor += "titulo = '" + livro.titulo + "', ";
-        valor += "descricao = '" + livro.descricao + "'";
+        valor += "descricao = '" + livro.descricao + "',";
+        valor += "idautor = '" + livro.idautor + "',";
+         valor += "localizacao = '" + livro.localizacao + "'";
         var sql = 'update livros set ' + valor;
         sql += " where id = " + livro.id;
         this._conn.query(sql, callback);    
