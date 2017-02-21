@@ -1,11 +1,11 @@
 module.exports = function(app){
     var controller = {};
 
-    controller.getLivros = function(req, res){
+    controller.getClientes = function(req, res){
         var conn = app.infra.connectionFactory();
-        var livrosDAO = new app.infra.LivrosDAO(conn, 0); 
+        var clienteDAO = new app.infra.ClienteDAO(conn, 0); 
         
-        livrosDAO.getLivros(function(err, results){
+        clienteDAO.getClientes(function(err, results){
             console.log('Entrou na lista');
             if (err){
                  console.log(err);
@@ -18,28 +18,28 @@ module.exports = function(app){
         conn.end();
     };
 
-    controller.getLivro = function (req, res){
+    controller.getCliente = function (req, res){
         var id = req.params.id;
         var conn = app.infra.connectionFactory();
-        var livrosDAO = new app.infra.LivrosDAO(conn, id);        
-        livrosDAO.getLivro(function(err, results){            
+        var clienteDAO = new app.infra.ClienteDAO(conn, id);        
+        clienteDAO.getCliente(function(err, results){            
             //res.status(200).json('Ok');
             res.json(results[0]);
         });       
     }
 
     controller.salva = function(req, res){
-        var livro = req.body;
+        var cliente = req.body;
         var conn = app.infra.connectionFactory();
-        var livrosDAO = new app.infra.LivrosDAO(conn, 0);
-        livrosDAO.salva(livro, function(erros, results){
+        var clienteDAO = new app.infra.ClienteDAO(conn, 0);
+        clienteDAO.salva(cliente, function(erros, results){
             if (erros){
                 res.status(400).json(erros);
                 console.log('400');
             }else{
                 console.log('200');            
-                var livrosDAO1 = new app.infra.LivrosDAO(conn, results.insertId);
-                livrosDAO1.getLivro(function(err, results){
+                var clienteDAO1 = new app.infra.ClienteDAO(conn, results.insertId);
+                clienteDAO1.getCliente(function(err, results){
                     //res.status(200).json('Ok');            
                     res.json(results[0]);                
                 });                              
@@ -49,26 +49,24 @@ module.exports = function(app){
     }
 
     controller.delete = function(req, res){
-        console.log('teste');
         var id = req.params.id;
-        //if (typeof i != "number") {
-        if (isNaN(id)){
-            res.status(400).json("Id não informado");
+        if (!id){
+            res.status(400).jsaon("Id não informado");
             return;
         }
         console.log('Excluir o livro: ' +  id);
         var conn = app.infra.connectionFactory();
-        var livrosDAO = new app.infra.LivrosDAO(conn,  id);        
-        livrosDAO.delete(function(err, results){
+        var clienteDAO = new app.infra.ClienteDAO(conn,  id);        
+        clienteDAO.delete(function(err, results){
             res.status(200).json('Ok');            
         });      
     }
 
-    function getLivroById(id){
+    function getClienteById(id){
         var conn = app.infra.connectionFactory();
-        var livrosDAO = new app.infra.LivrosDAO(conn, id);
+        var clienteDAO = new app.infra.ClienteDAO(conn, id);
         
-        livrosDAO.getLivro(function(err, results){
+        clienteDAO.getCliente(function(err, results){
             //console.log(results[0]);
             return results[0];
             //res.json(results[0]);

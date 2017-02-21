@@ -50,6 +50,10 @@ module.exports = function(app){
 
     controller.delete = function(req, res){
         var id = req.params.id;
+        if (!id){
+            res.status(400).jsaon("Id não informado");
+            return;
+        }
         console.log('Excluir o livro: ' +  id);
         var conn = app.infra.connectionFactory();
         var autorDAO = new app.infra.AutorDAO(conn,  id);        

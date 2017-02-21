@@ -5,7 +5,7 @@ module.exports = function(app){
         .get(controller.getLivros)
         .post(controller.salva);        
     
-    app.route('/api/livros/:idLivro')
+    app.route('/api/livros/:id')
         .get(controller.getLivro)
         .delete(controller.delete);
 

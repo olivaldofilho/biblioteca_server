@@ -18,6 +18,7 @@ module.exports = function(){
       res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
       return next();
     });
+    
     app.use(bodyParser.urlencoded({extended: true}));
     app.use(bodyParser.json());
     app.use(require('method-override')());

@@ -8,10 +8,10 @@ var connectionMysql = function(){
             user: 'usr_biblioteca',
             password: 'G3G9I2V2',
             database: 'bibliotecassia'
-    });    
+    });        
 };
 
 //wrapper
 module.exports = function(){
     return connectionMysql;
-}
+}   
