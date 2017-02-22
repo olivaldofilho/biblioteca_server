@@ -5,16 +5,16 @@ function LivrosDAO(conn, idLivro){
 }
 
 LivrosDAO.prototype.getLivros = function(callback){
-    this._conn.query('select * from livros', callback);
+    this._conn.query('select * from livro', callback);
 }
 
 LivrosDAO.prototype.getLivro = function (callback){
     console.log(this._idLivro);
-    this._conn.query('select * from livros where id = ?', + this._idLivro, callback);
+    this._conn.query('select * from livro where id = ?', + this._idLivro, callback);
 }
 
 LivrosDAO.prototype.delete = function(callback){
-    this._conn.query('delete from livros where id = ?', this._idLivro, callback);
+    this._conn.query('delete from livro where id = ?', this._idLivro, callback);
 }
 
 LivrosDAO.prototype.salva = function(livro, callback){
@@ -28,15 +28,15 @@ LivrosDAO.prototype.salva = function(livro, callback){
         valor += "'" + livro.descricao + "',";
         valor += "'" + livro.idautor + "',";
         valor += "'" + livro.localizacao + "'";
-        var sql = 'insert into livros (' + campo + ') values (' + valor + ')'; 
+        var sql = 'insert into livro (' + campo + ') values (' + valor + ')'; 
         this._conn.query(sql, callback);    
     }else{
         valor = "isbn = '" + livro.isbn + "', ";
         valor += "titulo = '" + livro.titulo + "', ";
         valor += "descricao = '" + livro.descricao + "',";
         valor += "idautor = '" + livro.idautor + "',";
-         valor += "localizacao = '" + livro.localizacao + "'";
-        var sql = 'update livros set ' + valor;
+        valor += "localizacao = '" + livro.localizacao + "'";
+        var sql = 'update livro set ' + valor;
         sql += " where id = " + livro.id;
         this._conn.query(sql, callback);    
     }    
