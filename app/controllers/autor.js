@@ -7,12 +7,10 @@ module.exports = function(app){
         
         autorDAO.getAutores(function(err, results){
             console.log('Entrou na lista');
-            if (err){
-                 console.log(err);
+            if (err){                 
                 res.status(400).json(err);
             }else{                
-                console.log(results);
-                res.json(results); 
+                res.status(200).json(results); 
             }              
         });        
         conn.end();
@@ -22,10 +20,9 @@ module.exports = function(app){
         var id = req.params.id;
         var conn = app.infra.connectionFactory();
         var autorDAO = new app.infra.AutorDAO(conn, id);        
-        autorDAO.getAutor(function(err, results){            
-            //res.status(200).json('Ok');
-            res.json(results[0]);
-        });       
+        autorDAO.getAutor(function(err, results){
+            res.status(200).json(results[0]);
+        });
     }
 
     controller.salva = function(req, res){
@@ -34,14 +31,11 @@ module.exports = function(app){
         var autorDAO = new app.infra.AutorDAO(conn, 0);
         autorDAO.salva(autor, function(erros, results){
             if (erros){
-                res.status(400).json(erros);
-                console.log('400');
-            }else{
-                console.log('200');            
+                res.status(400).json(erros);                
+            }else{                
                 var autorDAO1 = new app.infra.AutorDAO(conn, results.insertId);
-                autorDAO1.getAutor(function(err, results){
-                    //res.status(200).json('Ok');            
-                    res.json(results[0]);                
+                autorDAO1.getAutor(function(err, results){                  
+                    res.status(200).json(results[0]);
                 });                              
             }
         });
@@ -66,8 +60,7 @@ module.exports = function(app){
         var conn = app.infra.connectionFactory();
         var autorDAO = new app.infra.AutorDAO(conn, id);
         
-        autorDAO.getAutor(function(err, results){
-            //console.log(results[0]);
+        autorDAO.getAutor(function(err, results){            
             return results[0];
             //res.json(results[0]);
         });
