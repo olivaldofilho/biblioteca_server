@@ -62,8 +62,9 @@ RequisicaoDAO.prototype.salva = function(requisicao, callback){
         valor = "'" + requisicao.data_retirada + "',";
         valor += "'" + requisicao.data_prevista_devolucao + "',";
         valor += "'" + requisicao.id_cliente + "',";
-        valor += "'" + requisicao.id_livro + "'";
-        valor += "1";
+        valor += "'" + requisicao.id_livro + "',";
+        valor += "'" + requisicao.status + "'";        
+        
         sql = 'insert into requisicao (' + campo + ') values (' + valor + ')'; 
         this._conn.query(sql, callback);    
     }else{
