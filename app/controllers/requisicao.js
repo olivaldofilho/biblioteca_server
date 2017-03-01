@@ -41,7 +41,7 @@ module.exports = function(app){
                 var requisicaoDAO1 = new app.infra.RequisicaoDAO(conn, results.insertId);
                 requisicaoDAO1.getRequisicao(function(err, results){
                     //res.status(200).json('Ok');            
-                    res.json(results[0]);                
+                    res.status(200).json(results[0]);                
                 });                              
             }
         });

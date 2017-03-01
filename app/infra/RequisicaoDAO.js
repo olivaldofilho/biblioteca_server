@@ -8,9 +8,12 @@ RequisicaoDAO.prototype.getRequisicoes = function(callback){
     var sql = '';
     sql = 'select r.id, ';
     sql += '      r.data_retirada, ';
-    sql += '      r.data_devolucao, ';
+    sql += '      r.data_prevista_devolucao, ';
     sql += '      r.id_cliente, ';
     sql += '      r.id_livro, ';
+    sql += '      r.data_devolucao, ';
+    sql += '      r.obs_devolucao, ';
+    sql += '      r.status, ';
     sql += '      c.nome nome_cliente, ';
     sql += '      l.titulo titulo_livro ';
     sql += ' from requisicao r, ';
@@ -18,18 +21,21 @@ RequisicaoDAO.prototype.getRequisicoes = function(callback){
     sql += '      livro      l ';
     sql += 'where r.id_cliente = c.id ';
     sql += '  and r.id_livro   = l.id ';
-    sql += 'order by r.data_devolucao '
+    sql += 'order by r.data_devolucao desc '
     console.log(sql);
     this._conn.query(sql, callback);
 }
 
 RequisicaoDAO.prototype.getRequisicao = function (callback){
-     var sql = '';
+    var sql = '';
     sql = 'select r.id, ';
     sql += '      r.data_retirada, ';
-    sql += '      r.data_devolucao, ';
+    sql += '      r.data_prevista_devolucao, ';
     sql += '      r.id_cliente, ';
     sql += '      r.id_livro, ';
+    sql += '      r.data_devolucao, ';
+    sql += '      r.obs_devolucao, ';
+    sql += '      r.status, ';
     sql += '      c.nome nome_cliente, ';
     sql += '      l.titulo titulo_livro ';
     sql += ' from requisicao r, ';
@@ -49,18 +55,26 @@ RequisicaoDAO.prototype.delete = function(callback){
 RequisicaoDAO.prototype.salva = function(requisicao, callback){
     var campo = '';
     var valor = '';
+    var sql = '';
     
     if (!requisicao.id){
-        campo = 'data_retirada, data_devolucao, id_cliente, id_livro';
+        campo = 'data_retirada, data_prevista_devolucao, id_cliente, id_livro, status';
         valor = "'" + requisicao.data_retirada + "',";
-        valor += "'" + requisicao.data_devolucao + "',";
+        valor += "'" + requisicao.data_prevista_devolucao + "',";
         valor += "'" + requisicao.id_cliente + "',";
         valor += "'" + requisicao.id_livro + "'";
-        var sql = 'insert into requisicao (' + campo + ') values (' + valor + ')'; 
+        valor += "1";
+        sql = 'insert into requisicao (' + campo + ') values (' + valor + ')'; 
         this._conn.query(sql, callback);    
     }else{
-        valor = "data_retirada = '" + requisicao.nome + "'";      
-        var sql = 'update requisicao set ' + valor;
+        valor = "data_retirada = '" + requisicao.data_retirada + "',";
+        valor += " data_prevista_devolucao = '" + requisicao.data_prevista_devolucao + "',";
+        valor += " data_devolucao = '" + requisicao.data_devolucao + "',";
+        valor += " obs_devolucao = '" + requisicao.obs_devolucao + "',";
+        valor += " id_cliente = '" + requisicao.id_cliente + "',";
+        valor += " id_livro = '" + requisicao.id_livro + "',"; 
+        valor += " status = '" + requisicao.status + "'"; 
+        sql = 'update requisicao set ' + valor;
         sql += " where id = " + requisicao.id;
         this._conn.query(sql, callback);    
     }    

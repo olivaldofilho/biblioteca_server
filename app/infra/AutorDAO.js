@@ -9,29 +9,30 @@ AutorDAO.prototype.getAutores = function(callback){
 }
 
 AutorDAO.prototype.getAutor = function (callback){
-    this._conn.query('select * from autor where id = ?', + this._id, callback);
+    this._conn.query('select * from autor where id = ?', [this._id], callback);
 }
 
 AutorDAO.prototype.delete = function(callback){
-    this._conn.query('delete from autor where id = ?', this._id, callback);
+    this._conn.query('delete from autor where id = ?', [this._id], callback);
 }
 
 AutorDAO.prototype.salva = function(autor, callback){
     var campo = '';
     var valor = '';
-    
+    var sql = '';
+
     if (!autor.id){
         campo = 'nome';
-        valor = "'" + autor.nome + "'";        
-        var sql = 'insert into autor (' + campo + ') values (' + valor + ')'; 
-        this._conn.query(sql, callback);    
-    }else{
-        valor = "nome = '" + autor.nome + "'";      
-        var sql = 'update autor set ' + valor;
-        sql += " where id = " + autor.id;
-        this._conn.query(sql, callback);    
-    }    
-}
+        valor = '?';        
+        sql = 'insert into autor (' + campo + ') values (' + valor + ')'; 
+        this._conn.query(sql, [autor.nome], callback);    
+    }else{             
+        sql = 'update autor set ';
+        sql += ' nome = ? '
+        sql += ' where id = ?';
+        this._conn.query(sql, [autor.nome, autor.id], callback);    
+    };
+};
 
 
 /*controller.obtemContato = function(req, res){
