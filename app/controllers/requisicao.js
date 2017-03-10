@@ -18,6 +18,23 @@ module.exports = function(app){
         conn.end();
     };
 
+    controller.getRequisicoesPendentes = function(req, res){
+        var conn = app.infra.connectionFactory();
+        var requisicaoDAO = new app.infra.RequisicaoDAO(conn, 0); 
+        
+        requisicaoDAO.getRequisicoesPendentes(function(err, results){
+            console.log('Entrou na lista');
+            if (err){
+                 console.log(err);
+                res.status(400).json(err);
+            }else{                
+                console.log(results);
+                res.json(results); 
+            }              
+        });        
+        conn.end();
+    };
+
     controller.getRequisicao = function (req, res){
         var id = req.params.id;
         var conn = app.infra.connectionFactory();

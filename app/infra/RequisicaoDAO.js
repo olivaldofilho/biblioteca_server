@@ -48,6 +48,28 @@ RequisicaoDAO.prototype.getRequisicao = function (callback){
     this._conn.query(sql, + this._id, callback);
 }
 
+RequisicaoDAO.prototype.getRequisicoesPendentes = function (callback){
+    var sql = '';
+    sql = 'select r.id, ';
+    sql += '      r.data_retirada, ';
+    sql += '      r.data_prevista_devolucao, ';
+    sql += '      r.id_cliente, ';
+    sql += '      r.id_livro, ';
+    sql += '      r.data_devolucao, ';
+    sql += '      r.obs_devolucao, ';
+    sql += '      r.status, ';
+    sql += '      c.nome nome_cliente, ';
+    sql += '      l.titulo titulo_livro ';
+    sql += ' from requisicao r, ';
+    sql += '      cliente    c, ';
+    sql += '      livro      l ';
+    sql += 'where r.id_cliente     = c.id ';
+    sql += '  and r.id_livro       = l.id ';
+    sql += '  and r.data_devolucao is null';
+    
+    this._conn.query(sql, + this._id, callback);
+}
+
 RequisicaoDAO.prototype.delete = function(callback){
     this._conn.query('delete from requisicao where id = ?', this._id, callback);
 }

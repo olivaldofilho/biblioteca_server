@@ -7,5 +7,9 @@ module.exports = function(app){
     
     app.route('/api/requisicoes/:id?')
         .get(controller.getRequisicao)
-        .delete(controller.delete);       
+        .delete(controller.delete);
+
+    app.route('/api/requisicoespendentes')
+        .get(controller.getRequisicoesPendentes)
+        .post(controller.salva);         
 };
